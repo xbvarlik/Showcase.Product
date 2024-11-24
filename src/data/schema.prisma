@@ -1,0 +1,70 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Shop {
+    id String @id @default(uuid())
+    name String @db.VarChar(255)
+    description String? @db.VarChar(255)
+    address String @db.VarChar(255)
+
+    product Product[]
+
+    createdAt DateTime @default(now())
+    changedAt DateTime @updatedAt @default(now())
+    createdBy String? @db.Uuid 
+    changedBy String? @db.Uuid 
+    isDeleted Boolean @default(false)
+}
+
+model ProductUpperCategory {
+    id Int @id @default(autoincrement())
+    name String @db.VarChar(255)
+    description String? @db.VarChar(255)
+    price Decimal @db.Decimal(18, 2)
+
+    productCategory ProductCategory[]
+
+    createdAt DateTime @default(now())
+    changedAt DateTime @updatedAt @default(now())
+    createdBy String? @db.Uuid 
+    changedBy String? @db.Uuid 
+    isDeleted Boolean @default(false)
+}
+
+model ProductCategory {
+    id Int @id @default(autoincrement())
+    name String @db.VarChar(255)
+
+    productUpperCategoryId Int
+    productUpperCategory ProductUpperCategory? @relation(fields: [productUpperCategoryId], references: [id])
+
+    products Product[]
+
+    createdAt DateTime @default(now())
+    changedAt DateTime @updatedAt @default(now())
+    createdBy String? @db.Uuid 
+    changedBy String? @db.Uuid 
+    isDeleted Boolean @default(false)
+}
+
+model Product {
+    id String @id @default(uuid())
+    name String @db.VarChar(255)
+
+    productCategoryId Int
+    productCategory ProductCategory? @relation(fields: [productCategoryId], references: [id])
+    shopId String @db.Uuid
+    shop Shop? @relation(fields: [shopId], references: [id])
+
+    createdAt DateTime @default(now())
+    changedAt DateTime @updatedAt @default(now())
+    createdBy String? @db.Uuid 
+    changedBy String? @db.Uuid 
+    isDeleted Boolean @default(false)
+}

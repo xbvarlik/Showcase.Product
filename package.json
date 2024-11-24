@@ -1,0 +1,26 @@
+{
+  "name": "showcase.product",
+  "version": "1.0.0",
+  "description": "Product service of an e-commerce application.",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts"
+  },
+  "author": "barisvarlik",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.9.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "prisma": "^5.22.0"
+  }
+}
