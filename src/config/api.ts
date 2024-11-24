@@ -7,6 +7,12 @@ export default class ApiInitializer {
     public app: Express;
     private port: number = env.PORT || 3000;
 
+    // there will be a property of the class called userCredentials
+    // it will be filled by a middleware, called credentialParserMiddleware
+    // it will be passed to mountControllers method as parameter, then passed 
+    // onto individual controllers and then onto services as parameters in constructor.
+    // It will be used to fill audit fields and some isolation checks.
+
     constructor() {
         this.app = express();
         this.registerMiddleware();
