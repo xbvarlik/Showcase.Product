@@ -25,19 +25,8 @@ export default class ApiInitializer {
 
     public run(){
         this.app.listen(this.port, () => {
-            console.log(`Server is running on http://localhost:${PORT}`);
+            console.log(`Server is running on http://localhost:${this.port}`);
           });
     }
     
 }
-
-const app = express();
-const PORT = env.PORT || 3000;
-
-app.get('/', (req, res) => {
-    res.send('Hello, TypeScript!');
-  });
-  
-  app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
-  });
