@@ -1,7 +1,8 @@
 import express, { Express } from "express";
 import { env } from "./env";
-import ShopController from "../controllers/shopController";
 import { RouteConstants } from "../data/constants/routes";
+import ShopController from "../controllers/shopController";
+import ProductController from "../controllers/productController";
 
 export default class ApiInitializer {
     public app: Express;
@@ -21,8 +22,10 @@ export default class ApiInitializer {
 
     private mountControllers() {
         var shopController = new ShopController();
+        var productController = new ProductController();
 
         this.app.use(RouteConstants.SHOP_ROUTE, shopController.router);
+        this.app.use(RouteConstants.PRODUCT_ROUTE, productController.router);
     }
 
     private registerMiddleware() {

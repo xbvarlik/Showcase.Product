@@ -1,17 +1,30 @@
+import { Decimal, DecimalJsLike } from "@prisma/client/runtime/library";
 import { randomUUID, UUID } from "crypto";
-import { AuditFields } from "./auditFields";
 
-export class Product implements AuditFields {
+class ProductViewDto {
+    public id!: UUID;
+    public name: string = '';
+    public description: string = '';
+    public price: Decimal = new Decimal(0.0);
+    public productCategoryId: number = 0;
+    public shopId: UUID = randomUUID();
+}
+
+class ProductCreateDto {
+    public name: string = '';
+    public description: string = '';
+    public price: Decimal = new Decimal(0.0);
+    public productCategoryId: number = 0;
+    public shopId: UUID = randomUUID();
+}
+
+class ProductUpdateDto {
     public id: UUID = randomUUID();
     public name: string = '';
     public description: string = '';
-    public price: number = 0;
+    public price: Decimal = new Decimal(0.0);
     public productCategoryId: number = 0;
     public shopId: UUID = randomUUID();
-
-    public createdAt: Date = new Date();
-    public createdBy?: `${string}-${string}-${string}-${string}-${string}` | undefined;
-    public chagedAt: Date = new Date();
-    public changedBy?: `${string}-${string}-${string}-${string}-${string}` | undefined;
-    public isDeleted: boolean = false;
 }
+
+export {ProductCreateDto, ProductUpdateDto, ProductViewDto}
