@@ -1,7 +1,9 @@
 import { ShopCreateDto, ShopUpdateDto, ShopViewDto } from "../data/models/shop";
 import { ShopService } from "../services/shopService";
 import { UUID } from "crypto";
-import { Router, Request, Response } from "express";
+import { Router, Request, Response, NextFunction } from "express";
+import Authorize from "../utilities/decorators/authorize";
+import { UserRoleConstants } from "../data/constants/auth";
 
 export default class ShopController {
     private service: ShopService = new ShopService();
@@ -45,6 +47,7 @@ export default class ShopController {
         }
     }
 
+    @Authorize(UserRoleConstants.SHOP_OWNER)
     public async CreateShop(req: Request, res: Response): Promise<void> {
         try {
             var dto = req.body as ShopCreateDto;
@@ -56,6 +59,7 @@ export default class ShopController {
         }
     }
 
+    @Authorize(UserRoleConstants.SHOP_OWNER)
     public async UpdateShop(req: Request, res: Response): Promise<void> {
         try {
             var id = req.params.id as UUID;
@@ -68,6 +72,7 @@ export default class ShopController {
         }
     }
 
+    @Authorize(UserRoleConstants.SHOP_OWNER)
     public async DeleteShop(req: Request, res: Response): Promise<void> {
         try {
             var id = req.params.id as UUID;

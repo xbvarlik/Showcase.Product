@@ -1,7 +1,9 @@
+import { UserRoleConstants } from "../data/constants/auth";
 import { ProductCategoryCreateDto, ProductCategoryUpdateDto, ProductCategoryViewDto } from "../data/models/productCategory";
 import { ProductCategoryService } from "../services/productCategoryService";
 import { UUID } from "crypto";
 import { Router, Request, Response } from "express";
+import Authorize from "../utilities/decorators/authorize";
 
 export default class ProductCategoryController {
     private service: ProductCategoryService = new ProductCategoryService();
@@ -45,6 +47,7 @@ export default class ProductCategoryController {
         }
     }
 
+    @Authorize(UserRoleConstants.SHOP_OWNER)
     public async CreateProductCategory(req: Request, res: Response): Promise<void> {
         try {
             var dto = req.body as ProductCategoryCreateDto;
@@ -56,6 +59,7 @@ export default class ProductCategoryController {
         }
     }
 
+    @Authorize(UserRoleConstants.SHOP_OWNER)
     public async UpdateProductCategory(req: Request, res: Response): Promise<void> {
         try {
             var id = req.params.id as unknown as number;
@@ -68,6 +72,7 @@ export default class ProductCategoryController {
         }
     }
 
+    @Authorize(UserRoleConstants.SHOP_OWNER)
     public async DeleteProductCategory(req: Request, res: Response): Promise<void> {
         try {
             var id = req.params.id as unknown as number;

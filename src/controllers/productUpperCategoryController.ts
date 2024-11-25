@@ -1,7 +1,9 @@
+import { UserRoleConstants } from "../data/constants/auth";
 import { ProductUpperCategoryCreateDto, ProductUpperCategoryUpdateDto, ProductUpperCategoryViewDto } from "../data/models/productUpperCategory";
 import { ProductUpperCategoryService } from "../services/productUpperCategoryService";
 import { UUID } from "crypto";
 import { Router, Request, Response } from "express";
+import Authorize from "../utilities/decorators/authorize";
 
 export default class ProductUpperCategoryController {
     private service: ProductUpperCategoryService = new ProductUpperCategoryService();
@@ -45,6 +47,7 @@ export default class ProductUpperCategoryController {
         }
     }
 
+    @Authorize(UserRoleConstants.SHOP_OWNER)
     public async CreateProductUpperCategory(req: Request, res: Response): Promise<void> {
         try {
             var dto = req.body as ProductUpperCategoryCreateDto;
@@ -56,6 +59,7 @@ export default class ProductUpperCategoryController {
         }
     }
 
+    @Authorize(UserRoleConstants.SHOP_OWNER)
     public async UpdateProductUpperCategory(req: Request, res: Response): Promise<void> {
         try {
             var id = req.params.id as unknown as number;
@@ -68,6 +72,7 @@ export default class ProductUpperCategoryController {
         }
     }
 
+    @Authorize(UserRoleConstants.SHOP_OWNER)
     public async DeleteProductUpperCategory(req: Request, res: Response): Promise<void> {
         try {
             var id = req.params.id as unknown as number;

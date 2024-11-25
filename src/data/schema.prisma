@@ -8,12 +8,12 @@ generator client {
 }
 
 model Shop {
-    id String @id @default(uuid())
+    id String @id @db.Uuid @default(uuid())
     name String @db.VarChar(255)
-    description String? @db.VarChar(255)
+    description String? @db.Text
     address String @db.VarChar(255)
 
-    product Product[]
+    products Product[]
 
     createdAt DateTime @default(now())
     changedAt DateTime @updatedAt @default(now())
@@ -26,7 +26,7 @@ model ProductUpperCategory {
     id Int @id @default(autoincrement())
     name String @db.VarChar(255)
 
-    productCategory ProductCategory[]
+    productCategories ProductCategory[]
 
     createdAt DateTime @default(now())
     changedAt DateTime @updatedAt @default(now())
@@ -40,7 +40,7 @@ model ProductCategory {
     name String @db.VarChar(255)
 
     productUpperCategoryId Int
-    productUpperCategory ProductUpperCategory? @relation(fields: [productUpperCategoryId], references: [id])
+    productUpperCategory ProductUpperCategory @relation(fields: [productUpperCategoryId], references: [id])
 
     products Product[]
 
@@ -49,22 +49,27 @@ model ProductCategory {
     createdBy String? @db.Uuid 
     changedBy String? @db.Uuid 
     isDeleted Boolean @default(false)
+
+    @@index([productUpperCategoryId])
 }
 
 model Product {
-    id String @id @default(uuid())
+    id String @id @db.Uuid @default(uuid())
     name String @db.VarChar(255)
-    description String? @db.VarChar(255)
+    description String? @db.Text
     price Decimal @db.Decimal(18, 2)
 
     productCategoryId Int
     productCategory ProductCategory? @relation(fields: [productCategoryId], references: [id])
     shopId String @db.Uuid
-    shop Shop? @relation(fields: [shopId], references: [id])
+    shop Shop @relation(fields: [shopId], references: [id])
 
     createdAt DateTime @default(now())
     changedAt DateTime @updatedAt @default(now())
     createdBy String? @db.Uuid 
     changedBy String? @db.Uuid 
     isDeleted Boolean @default(false)
+
+    @@index([shopId])
+    @@index([productCategoryId])
 }

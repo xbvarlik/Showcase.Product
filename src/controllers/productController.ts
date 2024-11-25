@@ -2,6 +2,8 @@ import { ProductCreateDto, ProductUpdateDto, ProductViewDto } from "../data/mode
 import { ProductService } from "../services/productService";
 import { UUID } from "crypto";
 import { Router, Request, Response } from "express";
+import Authorize from "../utilities/decorators/authorize";
+import { UserRoleConstants } from "../data/constants/auth";
 
 export default class ProductController {
     private service: ProductService = new ProductService();
@@ -45,6 +47,7 @@ export default class ProductController {
         }
     }
 
+    @Authorize(UserRoleConstants.SHOP_OWNER)
     public async CreateProduct(req: Request, res: Response): Promise<void> {
         try {
             var dto = req.body as ProductCreateDto;
@@ -56,6 +59,7 @@ export default class ProductController {
         }
     }
 
+    @Authorize(UserRoleConstants.SHOP_OWNER)
     public async UpdateProduct(req: Request, res: Response): Promise<void> {
         try {
             var id = req.params.id as UUID;
@@ -68,6 +72,7 @@ export default class ProductController {
         }
     }
 
+    @Authorize(UserRoleConstants.SHOP_OWNER)
     public async DeleteProduct(req: Request, res: Response): Promise<void> {
         try {
             var id = req.params.id as UUID;
