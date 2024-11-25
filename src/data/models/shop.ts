@@ -1,5 +1,4 @@
 import { randomUUID, UUID } from "crypto";
-import { AuditFields } from "./auditFields";
 
 class ShopViewDto {
     public id: UUID = randomUUID();

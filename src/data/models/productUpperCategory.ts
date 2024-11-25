@@ -1,13 +1,14 @@
-import { randomUUID, UUID } from "crypto";
-import { AuditFields } from "./auditFields";
-
-export class ProductUpperCategory implements AuditFields {
+class ProductUpperCategoryViewDto {
     public id: number = 0;
     public name: string = '';
-
-    public createdAt: Date = new Date();
-    public createdBy?: `${string}-${string}-${string}-${string}-${string}` | undefined;
-    public chagedAt: Date = new Date();
-    public changedBy?: `${string}-${string}-${string}-${string}-${string}` | undefined;
-    public isDeleted: boolean = false;
 }
+
+class ProductUpperCategoryCreateDto {
+    public name: string = '';
+}
+
+class ProductUpperCategoryUpdateDto {
+    public name: string = '';
+}
+
+export {ProductUpperCategoryCreateDto, ProductUpperCategoryUpdateDto, ProductUpperCategoryViewDto}
