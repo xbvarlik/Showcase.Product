@@ -5,6 +5,7 @@ import ShopController from "../controllers/shopController";
 import ProductController from "../controllers/productController";
 import ProductCategoryController from "../controllers/productCategoryController";
 import ProductUpperCategoryController from "../controllers/productUpperCategoryController";
+import { LikedListController } from "../controllers/likedListController";
 
 export default class ApiInitializer {
     public app: Express;
@@ -27,11 +28,13 @@ export default class ApiInitializer {
         var productController = new ProductController();
         var productCategoryController = new ProductCategoryController();
         var productUpperCategoryController = new ProductUpperCategoryController();
+        var likedListController = new LikedListController();
 
         this.app.use(RouteConstants.SHOP_ROUTE, shopController.router);
         this.app.use(RouteConstants.PRODUCT_ROUTE, productController.router);
         this.app.use(RouteConstants.PRODUCT_CATEGORY_ROUTE, productCategoryController.router);
         this.app.use(RouteConstants.PRODUCT_UPPER_CATEGORY_ROUTE, productUpperCategoryController.router);
+        this.app.use(RouteConstants.LIKED_LIST, likedListController.router);
     }
 
     private registerMiddleware() {

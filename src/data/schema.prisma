@@ -64,6 +64,8 @@ model Product {
     shopId String @db.Uuid
     shop Shop @relation(fields: [shopId], references: [id])
 
+    likedListItems LikedListItem[]
+
     createdAt DateTime @default(now())
     changedAt DateTime @updatedAt @default(now())
     createdBy String? @db.Uuid 
@@ -72,4 +74,38 @@ model Product {
 
     @@index([shopId])
     @@index([productCategoryId])
+}
+
+model LikedList {
+  id String @id @db.Uuid @default(uuid())
+  title String @db.VarChar(255)
+  userId String @db.Uuid
+  isPublic Boolean 
+
+  likedListItems LikedListItem[]
+
+  createdAt DateTime @default(now())
+  changedAt DateTime @updatedAt @default(now())
+  createdBy String? @db.Uuid 
+  changedBy String? @db.Uuid 
+  isDeleted Boolean @default(false)
+}
+
+model LikedListItem {  
+  likedListId String @db.Uuid
+  likedList LikedList @relation(fields: [likedListId], references: [id])
+  productId String @db.Uuid
+  product Product @relation(fields: [productId], references: [id])
+
+  createdAt DateTime @default(now())
+  changedAt DateTime @updatedAt @default(now())
+  createdBy String? @db.Uuid 
+  changedBy String? @db.Uuid 
+  isDeleted Boolean @default(false)
+
+  @@id([productId, likedListId])
+  @@unique([productId, likedListId])
+  @@index([productId])
+  @@index([likedListId])
+  
 }
